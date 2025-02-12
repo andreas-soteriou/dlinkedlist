@@ -1,5 +1,5 @@
-#ifndef MYLLIST_H
-#define MYLLIST_H
+#ifndef DLLIST_H 
+#define DLLIST_H 
 
 /* This is the list node.
  * Do not use this structure to create your list insta* nce
@@ -61,5 +61,5 @@ void reverse(struct list *list);
 
 /* Retrieves the element at index */ 
 int get_element(struct list *list, int index);
-#endif /* MYLLIST_H */
+#endif /* DLLIST_H*/
 

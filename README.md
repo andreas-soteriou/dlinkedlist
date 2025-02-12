@@ -31,13 +31,13 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
 
 ## How to use the list structure 
 
-1. Make sure to review the comments in include/myllist.h for detailed information on each operation.
+1. Make sure to review the comments in include/dllist.h for detailed information on each operation.
 2. Initialize list before calling any CRUD operations
 3. Delete the list at the end of it's use, to prevent memory leaks.
 5. Example code given:
     ``` c
     #include <stdio.h>
-    #include "include/myllist.h"
+    #include "include/dllist..h"
 
     int main(){
         struct list *list =  NULL;

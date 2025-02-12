@@ -5,13 +5,13 @@ MAIN = main
 
 all: ${MAIN}
 
-${MAIN}: myllist.o main.o
+${MAIN}: dllist.o main.o
 	${CC} $^ -o $@
 
 ${MAIN}.o: ${MAIN}.c
 	${CC} -c $< -o $@
 
-myllist.o: src/myllist.c
+dllist.o: src/dllist.c
 	${CC} -c $< -o $@
 
 clean:
