@@ -66,7 +66,7 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
         return 0;
     }
     ```
-## Example Result
+## Example Output 
 ![Doubly Linked List Demo](images/dllist-test.png)
 
 *Visual representation of the doubly linked list structure after the operations are performed.*
