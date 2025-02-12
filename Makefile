@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-# Modify the MAIN according to the program that uses the list api
+# Modify the below to this: MAIN=main_program_name
 MAIN=main 
 
 all: ${MAIN}
