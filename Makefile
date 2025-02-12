@@ -1,12 +1,14 @@
 CC = gcc
 CFLAGS = -Wall
+# Modify the MAIN according to the program that uses the list api
+MAIN=main 
 
-all: main
+all: ${MAIN}
 
-main: myllist.o main.o
+${MAIN}: myllist.o ${MAIN}.o
 	${CC} $^ -o $@
 	
-main.o: main.c
+${MAIN}.o: ${MAIN}.c
 	${CC} -c $< -o $@
 
 myllist.o: src/myllist.c include/myllist.h
