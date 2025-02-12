@@ -59,5 +59,7 @@ void print_reverse_recur(struct node *head);
 /* Reverse the list */
 void reverse(struct list *list);
 
+/* Retrieves the element at index */ 
+int get_element(struct list *list, int index);
 #endif /* MYLLIST_H */
 

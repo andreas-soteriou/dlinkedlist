@@ -12,14 +12,58 @@ This is a guide on how to use the linked list CRUD api
 * Empty List 
 * List deallocation / deletion
 
-## Instructions
+## Build
 1. Modify Makefile according to your main program. See also Makefile's description for more details.
-2. Use 'make' command to compile, link, and create the executable file.
-3. Use 'make clean' command to remove object files and executable file.
-3. Please read the comments for each operation in the myllist.h library that exists in the include directory
-4. Initialize list before calling any CRUD operations
-5. Delete the list at the end of it's use, to prevent memory leaks.
-6. Enjoy.
+
+2. Build the executable file by running the below command
+```
+make
+
+```
+3. Use the below command to remove the object files and the executable file.
+```
+make clean
+```
+
+## How to use the list structure 
+
+1. Please take the moment and read the comments for each operation in the include/myllist.h.
+2. Initialize list before calling any CRUD operations
+3. Delete the list at the end of it's use, to prevent memory leaks.
+5. Example code given:
+    ``` c
+    #include <stdio.h>
+    #include "include/myllist.h"
+
+    int main(){
+        struct list *list =  NULL;
+        // Initialize the list before any CRUD Operations
+        init_list(&list);
+        
+        /* CRUD Operations */
+        for (int i=0; i<=9; i++){
+            insert(list, i);
+        }
+        print(list);
+
+        remove_element(list, 5);
+        print(list);
+        
+        replace(list, 3, -3);
+        reverse(list);
+        print(list);
+
+        clear(list);
+        print(list);
+        // Deallocate the list at the end
+        delete_list(&list);
+        print(list);
+
+        return 0;
+    }
+    ```
+## Example Result
+!(Doubly Linked List Demo)[testcases/ddlist-test.png]
 
 ## Ideas for the future
 1. Allow storing any data type

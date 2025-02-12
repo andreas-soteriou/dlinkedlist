@@ -254,4 +254,18 @@ static struct node *init_node(int value){
 	return new_node;
 }
 
+int get_element(struct list *list, int index) {
+	if (list == NULL){
+		printf("List is NULL.\n");
+		return -1;
+	}
+	if (list->head == NULL || index >= list->length || index < 0){
+		return -1;	
+	}
+	struct node *current = list->head;
+	for (int i=0; i<index; i++){
+		current = current->next;
+	}
 
+	return current->value;
+}
