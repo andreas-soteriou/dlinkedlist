@@ -1,5 +1,5 @@
 # Linked List API
-This is a guide on how to use the linked list CRUD api
+This API provides a simple implementation of a doubly linked list with CRUD operations, making it easy to manipulate data in a list-based structure.
 
 ## This API provides
 * Insertion
@@ -13,7 +13,11 @@ This is a guide on how to use the linked list CRUD api
 * List deallocation / deletion
 
 ## Build
-1. Modify Makefile according to your main program. See also Makefile's description for more details.
+1. Clone the repository:
+    ```
+    git clone https://github.com/andreas-soteriou/dlinkedlist.git 
+    ```
+2. Modify the `Makefile` if necessary to fit your project structure. See also Makefile's description for more details.
 
 2. Build the executable file by running the below command
 ```
@@ -26,7 +30,7 @@ make clean
 
 ## How to use the list structure 
 
-1. Please take the moment and read the comments for each operation in the include/myllist.h.
+1. Make sure to review the comments in include/myllist.h for detailed information on each operation.
 2. Initialize list before calling any CRUD operations
 3. Delete the list at the end of it's use, to prevent memory leaks.
 5. Example code given:
@@ -40,7 +44,7 @@ make clean
         init_list(&list);
         
         /* CRUD Operations */
-        for (int i=0; i<=9; i++){
+        for (int i=0; i<10; i++){
             insert(list, i);
         }
         print(list);
@@ -63,6 +67,7 @@ make clean
     ```
 ## Example Result
 ![Doubly Linked List Demo](images/dllist-test.png)
+*Visual representation of the doubly linked list structure after the operations are performed.*
 
 ## Ideas for the future
 1. Allow storing any data type
