@@ -1,18 +1,18 @@
 CC = gcc
 CFLAGS = -Wall
 # Modify the below to this: MAIN=main_program_name
-MAIN=main 
+MAIN = main
 
 all: ${MAIN}
 
-${MAIN}: myllist.o ${MAIN}.o
+${MAIN}: myllist.o main.o
 	${CC} $^ -o $@
-	
+
 ${MAIN}.o: ${MAIN}.c
 	${CC} -c $< -o $@
 
-myllist.o: src/myllist.c include/myllist.h
+myllist.o: src/myllist.c
 	${CC} -c $< -o $@
 
 clean:
-	rm *.o main
+	rm -f *.o ${MAIN}
