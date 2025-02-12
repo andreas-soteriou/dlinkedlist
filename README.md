@@ -62,7 +62,7 @@ make clean
     }
     ```
 ## Example Result
-![Doubly Linked List Demo](testcases/dllist-test.png)
+![Doubly Linked List Demo](images/dllist-test.png)
 
 ## Ideas for the future
 1. Allow storing any data type
