@@ -37,7 +37,7 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
 5. Example code given:
     ``` c
     #include <stdio.h>
-    #include "include/dllist..h"
+    #include "include/dllist.h"
 
     int main(){
         struct list *list =  NULL;
