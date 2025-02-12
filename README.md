@@ -18,7 +18,6 @@ This is a guide on how to use the linked list CRUD api
 2. Build the executable file by running the below command
 ```
 make
-
 ```
 3. Use the below command to remove the object files and the executable file.
 ```
