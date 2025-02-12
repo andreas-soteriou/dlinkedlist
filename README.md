@@ -20,13 +20,14 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
 2. Modify the `Makefile` if necessary to fit your project structure. See also Makefile's description for more details.
 
 2. Build the executable file by running the below command
-```
-make
-```
+    
+    ```
+    make
+    ```
 3. Use the below command to remove the object files and the executable file.
-```
-make clean
-```
+    ```
+    make clean
+    ```
 
 ## How to use the list structure 
 
@@ -67,6 +68,7 @@ make clean
     ```
 ## Example Result
 ![Doubly Linked List Demo](images/dllist-test.png)
+
 *Visual representation of the doubly linked list structure after the operations are performed.*
 
 ## Ideas for the future
