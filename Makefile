@@ -1,6 +1,5 @@
 CC = gcc
 CFLAGS = -Wall
-
 # Modify the below to this: MAIN=main_program_name
 MAIN=main 
 
