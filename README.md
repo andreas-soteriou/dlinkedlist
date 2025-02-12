@@ -79,5 +79,4 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
 5. Apply filtering or mapping 
 
 ## Disclaimer
-This is by no means the perfect Linked list data structure, and we are open for any improvements, as we ourselves are also improving it day by day.
-
+This is by no means a perfect linked list data structure, and we welcome any improvements, as we are continuously working on enhancing it.
