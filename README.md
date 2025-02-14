@@ -39,21 +39,35 @@ This API provides a simple implementation of a doubly linked list with CRUD oper
     #include <stdio.h>
     #include "include/dllist.h"
 
+    /* For simplicity the example handles integer data */
+    /* Print element function */
+    void print_element(void *element){
+        printf("%d\n", *(int *)element);
+    }
+    
+    /* Comparable function that compares if two elements are equal */
+    int compare_elements(void *element1, void *element2){
+        return (*(int *)element1 ==  *(int *)element2);
+    }
+ 
     int main(){
         struct list *list =  NULL;
         // Initialize the list before any CRUD Operations
-        init_list(&list);
+        init_list(&list, print_element, compare_elements);
         
         /* CRUD Operations */
         for (int i=0; i<10; i++){
-            insert(list, i);
+            insert(list, &i, sizeof(int));
         }
         print(list);
-
-        remove_element(list, 5);
+        
+        int remove = 5;
+        remove_element(list, &remove);
         print(list);
         
-        replace(list, 3, -3);
+        int dest = 3;
+        int src = -3;
+        replace(list, &dest, &src, sizeof(src));
         reverse(list);
         print(list);
 
