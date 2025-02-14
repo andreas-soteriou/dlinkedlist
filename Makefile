@@ -5,7 +5,7 @@ MAIN = main
 
 all: ${MAIN}
 
-${MAIN}: dllist.o main.o
+${MAIN}: dllist.o ${MAIN}.o
 	${CC} $^ -o $@
 
 ${MAIN}.o: ${MAIN}.c
