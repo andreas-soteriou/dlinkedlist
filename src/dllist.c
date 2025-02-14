@@ -116,7 +116,7 @@ void print(struct list *list){
 	printf("]\n");
 } 
 
-unsigned int llength(struct list *list){
+size_t llength(struct list *list){
 	if (list == NULL){
 		return 0;
 	}

@@ -18,7 +18,7 @@ typedef int (*comp_fptr)(void *element1, void *element2); /*The user is responsi
 struct list{
 	struct node *head;
 	struct node *tail;
-	unsigned int length;
+	size_t length;
 	print_fptr print; /*The user is responsible to create a print function that displays the element*/ 
 	comp_fptr compare; /*The user is responsible to create a comparable function that compares two elements based on the user's criteria. This should return 1 in success, non zero in failure*/
 ;
@@ -48,7 +48,7 @@ void delete_list(struct list **list);
 void print(struct list *list);
 
 /* Calculates the length of the list */
-unsigned int llength(struct list *list);
+size_t llength(struct list *list);
 
 /* Removes the first occurence of value if exists
  * This function calls the comparable function that the user  creates
