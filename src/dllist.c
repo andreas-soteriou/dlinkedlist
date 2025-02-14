@@ -150,6 +150,7 @@ int remove_element(struct list *list, void *element){
 		}
 		free(current->element);
 		free(current);
+		list->length--;
 		return TRUE;
 	}
 	struct node *prev = NULL;
@@ -158,17 +159,21 @@ int remove_element(struct list *list, void *element){
 		if (list->compare(current->element, element) && current == list->tail){
 			prev->next = NULL; /* Equivalent to saying: prev->next = current->next */ 
 			list->tail = prev;
+			free(current->element);
 			free(current);
+			list->length--;
 			return TRUE;
 		}
 		/* Not tail */
 		if(list->compare(current->element, element)){
 			prev->next = current->next; /* Make the prev node's next pointer point to the next node */
 			current->next->prev = prev; /* Make the the next node's previous pointer point to the prev node */
+			free(current->element);
 			free(current);
+			list->length--;
 			return TRUE;
 		}		
-		prev = current;		
+		prev = current;
 		current = current->next;
 	}
 	return FALSE;
@@ -187,8 +192,8 @@ int replace(struct list *list, void *dest_element, void *src_element, size_t src
 				printf("Error allocating memory.\n");
 				return FALSE;
 			}
-			/*memcpy(new_element, src_element, src_size);*/
-			/*free(current->element);*/
+			memcpy(new_element, src_element, src_size);
+			free(current->element);
 			current->element = new_element;
 			return TRUE;
 		}
