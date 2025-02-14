@@ -222,21 +222,6 @@ void print_reverse(struct list *list){
 	}
 	printf("]\n");
 }
-void print_reverse_recur(struct node *head){
-	if (head == NULL){
-		return;
-	}
-	print_reverse_recur(head->next);
-	if (head->next == NULL){
-		printf("[%d, ", head->element);
-	}else if (head->prev == NULL){
-		printf("%d]\n", head->element);
-	}else{
-		printf("%d, ", head->element);
-	}
-
-}
-
 void reverse(struct list *list){
 	if (list == NULL){
 		printf("List is NULL.\n");

@@ -65,9 +65,6 @@ int replace(struct list *list, void *dest_element, void *src_element, size_t src
 /* Print list in reverse */
 void print_reverse(struct list *list);
 
-/* Print list in reverse using recursion */
-void print_reverse_recur(struct node *head);
-
 /* Reverse the list */
 void reverse(struct list *list);
 
