@@ -148,6 +148,7 @@ int remove_element(struct list *list, void *element){
 		}else{
 			list->tail = NULL;
 		}
+		free(current->element);
 		free(current);
 		return TRUE;
 	}
@@ -186,8 +187,8 @@ int replace(struct list *list, void *dest_element, void *src_element, size_t src
 				printf("Error allocating memory.\n");
 				return FALSE;
 			}
-			memcpy(new_element, src_element, src_size);
-			free(current->element);
+			/*memcpy(new_element, src_element, src_size);*/
+			/*free(current->element);*/
 			current->element = new_element;
 			return TRUE;
 		}
@@ -266,6 +267,7 @@ static struct node *init_node(void *element, size_t element_size){
 	new_node->element = malloc(element_size);
 	if (new_node->element == NULL){
 		fprintf(stderr, "Error allocating memory.\n");
+		free(new_node);
 		return NULL;
 	}
 	/* Use memcpy to copy the memory of the new element */
