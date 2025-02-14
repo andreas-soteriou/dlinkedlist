@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "../include/dllist.h" 
 
 #define CHECK_LIST_EMPTY(head) \
@@ -9,16 +10,16 @@
 	}
 
 struct node{
-	int value; /* Node value */
+	void *element; /* Node element*/
 	struct node *next; /* Pointer to the next element of the list */
 	struct node *prev; /*Pointer to the prev element of the list */
 };
 
 static enum boolean{FALSE, TRUE}boolean;
 
-static struct node *init_node(int value);
+static struct node *init_node(void *element, size_t element_size);
 
-void init_list(struct list **list){
+void init_list(struct list **list, print_fptr pfptr, comp_fptr cfptr){
 	if (*list != NULL){
 		/* List already initialized */
 		printf("List already initialized. STOP\n");
@@ -32,14 +33,18 @@ void init_list(struct list **list){
 	(*list)->head = NULL;
 	(*list)->tail = NULL;
 	(*list)->length = 0;
+
+	/* Assign the print and compare function pointers */
+	(*list)->print = pfptr;
+	(*list)->compare = cfptr;
 }
-void insert(struct list *list, int value){
+void insert(struct list *list, void *element, size_t element_size){
 	/* Check if list is initialized. If not call init_list */
 	if (list == NULL){
-		printf("Initializing list...\n");
-		init_list(&list);
+		printf("Error: List is not initialized. Call 'init_list()' first.\n");
+		return;
 	}
-	struct node *new_node = init_node(value); 
+	struct node *new_node = init_node(element, element_size); 
 	
 	/* Check if list is empty */
 	if (list->head == NULL){
@@ -69,6 +74,7 @@ int clear(struct list *list){
 	while(list->head != NULL){
 		current = list->head;
 		list->head = list->head->next;
+		free(current->element);
 		free(current);
 		list->length--;
 	}
@@ -101,10 +107,10 @@ void print(struct list *list){
 	while (current != NULL){
 		if (current->next == NULL){
 			/*Tail node*/ 
-			printf("%d", current->value);
+			list->print(current->element);
 			break;
 		}
-		printf("%d, ", current->value);
+		list->print(current->element);
 		current = current->next;
 	}
 	printf("]\n");
@@ -117,7 +123,7 @@ unsigned int llength(struct list *list){
 	return list->length;
 }
 
-int remove_element(struct list *list, int value){
+int remove_element(struct list *list, void *element){
 	
 	if (list == NULL){
 		printf("List is NULL.\n");
@@ -128,7 +134,7 @@ int remove_element(struct list *list, int value){
 	struct node *current = list->head;
 
 	/* Check if the value to delete is existing on the head */
-	if (list->head->value == value){
+	if (list->compare(list->head->element, element)){
 		/* Make the head jump to the next node */
 		list->head = list->head->next;
 		/* 
@@ -148,13 +154,14 @@ int remove_element(struct list *list, int value){
 	struct node *prev = NULL;
 
 	while(current != NULL){
-		if (current->value == value && current == list->tail){
+		if (list->compare(current->element, element) && current == list->tail){
 			prev->next = NULL; /* Equivalent to saying: prev->next = current->next */ 
 			list->tail = prev;
 			free(current);
 			return TRUE;
 		}
-		if(current->value == value){
+		/* Not tail */
+		if(list->compare(current->element, element)){
 			prev->next = current->next; /* Make the prev node's next pointer point to the next node */
 			current->next->prev = prev; /* Make the the next node's previous pointer point to the prev node */
 			free(current);
@@ -166,15 +173,22 @@ int remove_element(struct list *list, int value){
 	return FALSE;
 }
 
-int replace(struct list *list, int el, int value){
+int replace(struct list *list, void *dest_element, void *src_element, size_t src_size){
 	struct node *current = list->head;
 
 	CHECK_LIST_EMPTY(list->head);
 	
 	while (current != NULL){
-		if (current->value == el){
-			/* Found */
-			current->value = value;
+		if (list->compare(current->element, dest_element)){
+			/* Reallocate the memory to the newly size */
+			void *new_element = calloc(1, src_size);
+			if (new_element == NULL){
+				printf("Error allocating memory.\n");
+				return FALSE;
+			}
+			memcpy(new_element, src_element, src_size);
+			free(current->element);
+			current->element = new_element;
 			return TRUE;
 		}
 		current = current->next;
@@ -194,10 +208,10 @@ void print_reverse(struct list *list){
 	while (tail != NULL){
 		if (tail->prev == NULL){
 			/*Tail node */
-			printf("%d", tail->value);
+			list->print(tail->element);
 			break;
 		}
-		printf("%d, ", tail->value);
+		list->print(tail->element);
 		tail = tail->prev;
 	}
 	printf("]\n");
@@ -208,11 +222,11 @@ void print_reverse_recur(struct node *head){
 	}
 	print_reverse_recur(head->next);
 	if (head->next == NULL){
-		printf("[%d, ", head->value);
+		printf("[%d, ", head->element);
 	}else if (head->prev == NULL){
-		printf("%d]\n", head->value);
+		printf("%d]\n", head->element);
 	}else{
-		printf("%d, ", head->value);
+		printf("%d, ", head->element);
 	}
 
 }
@@ -227,10 +241,10 @@ void reverse(struct list *list){
 	struct node *tail = list->tail;
 
 	while (head != NULL){
-		int temp = head->value;
+		void *temp = head->element;
 
-		head->value = tail->value;
-		tail->value = temp;
+		head->element = tail->element;
+		tail->element = temp;
 
 		/* For even list length && For odd list length*/
 		if (head->next == tail->prev || head->next == tail){
@@ -241,31 +255,38 @@ void reverse(struct list *list){
 	}
 }
 
-static struct node *init_node(int value){
+static struct node *init_node(void *element, size_t element_size){
 	struct node *new_node = malloc(sizeof(struct node));
 	if (new_node == NULL){
 		fprintf(stderr, "Error allocating memory.\n");
 		return NULL;
 	}
-
-	new_node->value = value;
+	
+	/* Allocate memory for the element itself */
+	new_node->element = malloc(element_size);
+	if (new_node->element == NULL){
+		fprintf(stderr, "Error allocating memory.\n");
+		return NULL;
+	}
+	/* Use memcpy to copy the memory of the new element */
+	memcpy(new_node->element, element, element_size);
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return new_node;
 }
 
-int get_element(struct list *list, int index) {
+void *get_element(struct list *list, int index) {
 	if (list == NULL){
 		printf("List is NULL.\n");
-		return -1;
+		return NULL;
 	}
 	if (list->head == NULL || index >= list->length || index < 0){
-		return -1;	
+		return NULL;	
 	}
 	struct node *current = list->head;
 	for (int i=0; i<index; i++){
 		current = current->next;
 	}
 
-	return current->value;
+	return current->element;
 }
