@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 #include "../include/dllist.h" 
 
 #define CHECK_LIST_EMPTY(head) \
@@ -188,10 +189,7 @@ int replace(struct list *list, void *dest_element, void *src_element, size_t src
 		if (list->compare(current->element, dest_element)){
 			/* Reallocate the memory to the newly size */
 			void *new_element = calloc(1, src_size);
-			if (new_element == NULL){
-				printf("Error allocating memory.\n");
-				return FALSE;
-			}
+			assert(new_element != NULL);
 			memcpy(new_element, src_element, src_size);
 			free(current->element);
 			current->element = new_element;
@@ -248,11 +246,8 @@ void reverse(struct list *list){
 
 static struct node *init_node(void *element, size_t element_size){
 	struct node *new_node = malloc(sizeof(struct node));
-	if (new_node == NULL){
-		fprintf(stderr, "Error allocating memory.\n");
-		return NULL;
-	}
-	
+	assert(new_node != NULL);
+		
 	/* Allocate memory for the element itself */
 	new_node->element = malloc(element_size);
 	if (new_node->element == NULL){
