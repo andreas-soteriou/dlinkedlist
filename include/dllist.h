@@ -21,7 +21,6 @@ struct list{
 	unsigned int length;
 	print_fptr print; /*The user is responsible to create a print function that displays the element*/ 
 	comp_fptr compare; /*The user is responsible to create a comparable function that compares two elements based on the user's criteria. This should return 1 in success, non zero in failure*/
-;
 };
 
 /* Initialize list 
